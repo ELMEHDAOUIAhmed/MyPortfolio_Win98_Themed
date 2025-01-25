@@ -283,6 +283,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'https://win98icons.alexmeub.com/icons/png/mail_box-0.png'
   );
 
+  windowManager.registerWindow(
+    'skills',
+    document.getElementById('skills-window'),
+    'Skills',
+    'https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png'
+  );
+
   // Preload sounds
   preloadSounds();
 
