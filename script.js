@@ -1,10 +1,11 @@
 // Add to the beginning of the existing script.js file
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
-  "Feel free to explore the windows and icons!",
+  "Feel free to explore the windows!",
   "Need help? Just ask!",
   "Don't forget to check out my projects!",
-  "You can contact me through the Contact window!"
+  "You can contact me through the Contact window!",
+  "To check out my Cv click on My CV!"
 ];
 
 let currentMessageIndex = 0;
