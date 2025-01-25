@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add CV download functionality
   document.querySelector('.download-cv')?.addEventListener('click', () => {
     // Replace 'YOUR_CV_URL' with your actual CV download URL
-    const cvUrl = 'hhttps://pouch.jumpshare.com/download/9qeiCiC9JsgfwZ7MIc31XU5uWW4We7vWR6Cx-xvShfexcNQnSbxiLXlifG1UcSDfI1fcPGYaAw7JhuY-yRqpVQ';
+    const cvUrl = 'https://pouch.jumpshare.com/download/9qeiCiC9JsgfwZ7MIc31XU5uWW4We7vWR6Cx-xvShfexcNQnSbxiLXlifG1UcSDfI1fcPGYaAw7JhuY-yRqpVQ';
     window.open(cvUrl, '_blank');
   });
 
@@ -476,3 +476,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 console.log('Windows 95 Portfolio Loaded!');
+
+
