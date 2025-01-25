@@ -42,6 +42,14 @@ class WindowManager {
     this.activeWindows = [];
     this.draggedWindow = null;
     this.dragOffset = { x: 0, y: 0 };
+    
+    // Safe area constants
+    this.SAFE_MARGIN = {
+      TOP: 0,
+      RIGHT: 100, // Minimum width visible
+      BOTTOM: 50, // Space for taskbar + minimum height
+      LEFT: 0
+    };
   }
 
   registerWindow(id, container, title, icon) {
@@ -100,6 +108,24 @@ class WindowManager {
       // Prevent text selection while dragging
       e.preventDefault();
     });
+  }
+
+  constrainPosition(x, y, width, height) {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const taskbarHeight = 28; // Height of the taskbar
+
+    // Calculate bounds with safe margins
+    const minX = -width + this.SAFE_MARGIN.RIGHT;
+    const maxX = viewportWidth - this.SAFE_MARGIN.LEFT;
+    const minY = this.SAFE_MARGIN.TOP;
+    const maxY = viewportHeight - taskbarHeight - this.SAFE_MARGIN.BOTTOM;
+
+    // Constrain position
+    return {
+      x: Math.max(minX, Math.min(maxX, x)),
+      y: Math.max(minY, Math.min(maxY, y))
+    };
   }
 
   setupWindowControls(id) {
@@ -241,15 +267,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup global mouse move and up handlers for dragging
   document.addEventListener('mousemove', (e) => {
     if (windowManager.draggedWindow) {
+      const rect = windowManager.draggedWindow.getBoundingClientRect();
       const x = e.clientX - windowManager.dragOffset.x;
       const y = e.clientY - windowManager.dragOffset.y;
       
-      // Keep window within viewport bounds
-      const maxX = window.innerWidth - windowManager.draggedWindow.offsetWidth;
-      const maxY = window.innerHeight - windowManager.draggedWindow.offsetHeight;
+      // Apply position constraints
+      const constrainedPos = windowManager.constrainPosition(x, y, rect.width, rect.height);
       
-      windowManager.draggedWindow.style.left = Math.max(0, Math.min(maxX, x)) + 'px';
-      windowManager.draggedWindow.style.top = Math.max(0, Math.min(maxY, y)) + 'px';
+      windowManager.draggedWindow.style.left = constrainedPos.x + 'px';
+      windowManager.draggedWindow.style.top = constrainedPos.y + 'px';
     }
   });
 
