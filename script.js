@@ -1,3 +1,22 @@
+// Add to the beginning of the existing script.js file
+const ROVER_MESSAGES = [
+  "Hi! Welcome to my portfolio!",
+  "Feel free to explore the windows and icons!",
+  "Need help? Just ask!",
+  "Don't forget to check out my projects!",
+  "You can contact me through the Contact window!"
+];
+
+let currentMessageIndex = 0;
+
+function updateRoverMessage() {
+  const messageElement = document.querySelector('.rover-message');
+  if (messageElement) {
+    messageElement.textContent = ROVER_MESSAGES[currentMessageIndex];
+    currentMessageIndex = (currentMessageIndex + 1) % ROVER_MESSAGES.length;
+  }
+}
+
 // Add this to the top of your script.js file with other constants
 const contactForm = {
   fullName: '',
@@ -292,6 +311,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Preload sounds
   preloadSounds();
+
+  // Set up Rover's message rotation
+  setInterval(updateRoverMessage, 5000);
 
   // Setup global mouse move and up handlers for dragging
   document.addEventListener('mousemove', (e) => {
