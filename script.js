@@ -1,6 +1,6 @@
 // Add to the beginning of the existing script.js file
 const ROVER_MESSAGES = [
-  "Hi! mY Name is Ahmed Welcome to my portfolio!",
+  "Hi! My Name is Ahmed Welcome to my portfolio!",
   "Feel free to explore the windows and icons!",
   "Need help? Just ask!",
   "Don't forget to check out my projects!",
