@@ -15,15 +15,11 @@
         <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-5.png" alt="My Computer">
         <span>My Computer</span>
       </div>
-      <div class="desktop-icon">
-        <img src="https://static.wikia.nocookie.net/logopedia/images/f/f2/Mail-memphis-beta2.svg/revision/latest?cb=20250102172408" alt="Inbox">
-        <span>Inbox</span>
-      </div>
-      <div class="desktop-icon">
+            <div class="desktop-icon">
         <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin">
         <span>Recycle Bin</span>
       </div>
-      <div class="desktop-icon">
+            <div class="desktop-icon">
         <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Projects">
         <span>My Projects</span>
       </div>
@@ -31,6 +27,20 @@
         <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="Skills">
         <span>Skills</span>
       </div>
+      <div class="desktop-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-4.png" alt="LinkedIn">
+        <span>LinkedIn</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/console_prompt-0.png" alt="GitHub">
+        <span>GitHub</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/mail_box-0.png" alt="Email">
+        <span>Email</span>
+      </div>
+
+
       <div class="desktop-icon">
         <img src="https://storage.googleapis.com/multi-static-content/thumbs/artage-io-thumb-e5ea88c36e638903afd418ca26caa87a.png" alt="Contact ME">
         <span>Contact ME</span>
@@ -51,15 +61,81 @@
         </div>
       </div>
       <div class="window-content">
+        <!-- Menu Bar -->
+        <div class="explorer-menubar">
+          <ul>
+            <li>File</li>
+            <li>Edit</li>
+            <li>View</li>
+            <li>Help</li>
+          </ul>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="explorer-toolbar">
+          <button>
+            <img src="https://win98icons.alexmeub.com/icons/png/back-2.png" alt="Back">
+            Back
+          </button>
+          <button>
+            <img src="https://win98icons.alexmeub.com/icons/png/forward-2.png" alt="Forward">
+            Forward
+          </button>
+          <button>
+            <img src="https://win98icons.alexmeub.com/icons/png/up-2.png" alt="Up">
+            Up
+          </button>
+        </div>
+
+        <!-- Address Bar -->
+        <div class="explorer-address">
+          <span>Address:</span>
+          <input type="text" value="C:\My Computer" readonly>
+        </div>
+
+        <!-- Explorer Content -->
         <div class="explorer-content">
-          <div class="drive-item">
-            <img src="https://win98icons.alexmeub.com/icons/png/drive_cd_rom-4.png" alt="C Drive" width="32" height="32">
-            <span>Local Disk (C:)</span>
+          <div class="explorer-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/drive_hard_disk-4.png" alt="C Drive">
+            <div class="explorer-item-info">
+              <span class="explorer-item-name">Local Disk (C:)</span>
+              <span class="explorer-item-details">System Drive</span>
+            </div>
           </div>
-          <div class="drive-item">
-            <img src="https://win98icons.alexmeub.com/icons/png/cd_drive-4.png" alt="D Drive" width="32" height="32">
-            <span>CD Drive (D:)</span>
+          <div class="explorer-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/cd_drive-4.png" alt="D Drive">
+            <div class="explorer-item-info">
+              <span class="explorer-item-name">CD Drive (D:)</span>
+              <span class="explorer-item-details">CD-ROM Drive</span>
+            </div>
           </div>
+          <div class="explorer-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/control_panel_users-4.png" alt="Control Panel">
+            <div class="explorer-item-info">
+              <span class="explorer-item-name">Control Panel</span>
+              <span class="explorer-item-details">System Settings</span>
+            </div>
+          </div>
+          <div class="explorer-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/printer-4.png" alt="Printers">
+            <div class="explorer-item-info">
+              <span class="explorer-item-name">Printers</span>
+              <span class="explorer-item-details">1 printer installed</span>
+            </div>
+          </div>
+          <div class="explorer-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/dial_up_networking-4.png" alt="Dial-Up">
+            <div class="explorer-item-info">
+              <span class="explorer-item-name">Dial-Up Networking</span>
+              <span class="explorer-item-details">Connect to Internet</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="explorer-status">
+          <span>5 object(s)</span>
+          <span>Local Disk</span>
         </div>
       </div>
     </div>

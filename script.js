@@ -10,6 +10,13 @@ const clickSound = new Audio(SOUNDS.CLICK);
 const openSound = new Audio(SOUNDS.OPEN);
 const closeSound = new Audio(SOUNDS.CLOSE);
 
+// Social media links
+const SOCIAL_LINKS = {
+  'LinkedIn': 'YOUR_LINKEDIN_URL',
+  'GitHub': 'YOUR_GITHUB_URL',
+  'Email': 'mailto:YOUR_EMAIL'
+};
+
 // Preload sounds
 function preloadSounds() {
   try {
@@ -328,15 +335,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Handle desktop icon clicks
+  // Handle desktop icon clicks with social media support
   const desktopIcons = document.querySelectorAll('.desktop-icon');
   desktopIcons.forEach(icon => {
     icon.addEventListener('click', (e) => {
       e.preventDefault();
       playSound(clickSound);
       
+      const iconName = icon.querySelector('span').textContent;
       const windowId = icon.dataset.window;
-      if (windowId) {
+
+      // Check if it's a social media icon
+      if (SOCIAL_LINKS[iconName]) {
+        window.open(SOCIAL_LINKS[iconName], '_blank');
+      } else if (windowId) {
         windowManager.showWindow(windowId);
       } else {
         alert('Opening Folder Explorer... (Coming Soon)');
