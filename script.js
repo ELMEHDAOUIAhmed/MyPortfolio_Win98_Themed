@@ -91,13 +91,20 @@ class WindowManager {
     const window = container.querySelector('.window');
     const taskbarItems = document.getElementById('taskbarItems');
     
-    // Create taskbar item
+    // Create taskbar item with explicit image dimensions and error handling
     const taskbarItem = document.createElement('div');
     taskbarItem.className = 'taskbar-item';
-    taskbarItem.innerHTML = `
-      <img src="${icon}" alt="${title}" width="16" height="16">
-      ${title}
-    `;
+    const iconImg = document.createElement('img');
+    iconImg.src = icon;
+    iconImg.alt = title;
+    iconImg.width = 16;
+    iconImg.height = 16;
+    // Add error handling for icon loading
+    iconImg.onerror = () => {
+      iconImg.src = 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png'; // Fallback icon
+    };
+    taskbarItem.appendChild(iconImg);
+    taskbarItem.appendChild(document.createTextNode(title));
 
     // Store references
     this.windows.set(id, { container, window, taskbarItem, title, icon });
@@ -477,5 +484,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 console.log('Windows 95 Portfolio Loaded!');
-
-

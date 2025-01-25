@@ -706,3 +706,56 @@ body {
   flex: 1;
   height: calc(100% - 80px); /* Subtract height of menubar, toolbar, address bar, and status bar */
 }
+
+/* CV Window Styles */
+.cv-container {
+  background: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+}
+
+.cv-toolbar {
+  padding: 8px;
+  border-bottom: 1px solid var(--win95-darker);
+  flex-shrink: 0; /* Prevent toolbar from shrinking */
+}
+
+.cv-viewer {
+  flex: 1;
+  position: relative; /* Add positioning context */
+  min-height: 550px;
+}
+
+.cv-viewer iframe {
+  position: absolute; /* Position absolutely within cv-viewer */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Window sizing for CV */
+#cv-window .window {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+#cv-window .window-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent scrolling at this level */
+}
+
+/* Ensure taskbar items show icons correctly */
+.taskbar-item img {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
