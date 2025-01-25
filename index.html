@@ -1,83 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Windows 95 Portfolio</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <div class="desktop">
-      <div class="desktop-icons">
-        <a href="/projects.html" class="desktop-icon">
-          <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="Projects" class="icon-img">
-          <div class="icon-text">My Projects</div>
-        </a>
-        <a href="/skills.html" class="desktop-icon">
-          <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="Skills" class="icon-img">
-          <div class="icon-text">Skills</div>
-        </a>
-        <a href="/contact.html" class="desktop-icon">
-          <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="Contact" class="icon-img">
-          <div class="icon-text">Contact Me</div>
-        </a>
-        <a href="/computer.html" class="desktop-icon">
-          <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-5.png" alt="My Computer" class="icon-img">
-          <div class="icon-text">My Computer</div>
-        </a>
-        <a href="/inbox.html" class="desktop-icon">
-          <img src="https://win98icons.alexmeub.com/icons/png/mail-5.png" alt="Inbox" class="icon-img">
-          <div class="icon-text">Inbox</div>
-        </a>
-        <a href="/recycle.html" class="desktop-icon">
-          <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin" class="icon-img">
-          <div class="icon-text">Recycle Bin</div>
-        </a>
+<head>
+  <title>Windows 95 Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <!-- Desktop Icons -->
+  <div class="desktop">
+    <div class="desktop-icons">
+      <div class="desktop-icon" data-window="my-computer">
+        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-5.png" alt="My Computer">
+        <span>My Computer</span>
       </div>
+      <div class="desktop-icon">
+        <img src="https://static.wikia.nocookie.net/logopedia/images/f/f2/Mail-memphis-beta2.svg/revision/latest?cb=20250102172408" alt="Inbox">
+        <span>Inbox</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin">
+        <span>Recycle Bin</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Projects">
+        <span>My Projects</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="Skills">
+        <span>Skills</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="https://storage.googleapis.com/multi-static-content/thumbs/artage-io-thumb-e5ea88c36e638903afd418ca26caa87a.png" alt="Contact ME">
+        <span>Contact ME</span>
+      </div>
+    </div>
+  </div>
 
-      <div class="window-container">
-        <div class="window">
-          <div class="window-title">
-            <span>About Me - AhmedZin</span>
-            <div class="window-controls">
-              <a href="/minimize.html" class="window-control">_</a>
-              <a href="/maximize.html" class="window-control">□</a>
-              <a href="/close.html" class="window-control">×</a>
-            </div>
+  <!-- My Computer Window -->
+  <div class="window-container window-hidden" id="my-computer-window">
+    <div class="window">
+      <div class="window-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-5.png" alt="My Computer" width="16" height="16">
+        My Computer
+        <div class="window-controls">
+          <button class="window-control minimize">_</button>
+          <button class="window-control maximize">□</button>
+          <button class="window-control close">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="explorer-content">
+          <div class="drive-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/drive_cd_rom-4.png" alt="C Drive" width="32" height="32">
+            <span>Local Disk (C:)</span>
           </div>
-          <div class="window-content">
-            <div class="profile-info">
-              <h2>ELMEHDAOUI Ahmed zine el abdine</h2>
-              <p class="role">Software Engineer, Mobile & Web Developer</p>
-              <ul class="info-list">
-                <li>🌱 Currently learning everything</li>
-                <li>🥅 Working towards 2025 Goals</li>
-                <li>⚡ Fun fact: Loves drawing despite not being good at it</li>
-              </ul>
-            </div>
+          <div class="drive-item">
+            <img src="https://win98icons.alexmeub.com/icons/png/cd_drive-4.png" alt="D Drive" width="32" height="32">
+            <span>CD Drive (D:)</span>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="taskbar">
-      <button class="start-button" id="startButton">
-        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Start" width="16" height="16">
-        Start
-      </button>
-      <div class="taskbar-items">
-        <div class="taskbar-item">
-          <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="Portfolio" width="16" height="16">
-          Portfolio.exe
+  <!-- About Me Window -->
+  <div class="window-container" id="about-me-window">
+    <div class="window">
+      <div class="window-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/user-0.png" alt="About Me" width="16" height="16">
+        About Me
+        <div class="window-controls">
+          <button class="window-control minimize">_</button>
+          <button class="window-control maximize">□</button>
+          <button class="window-control close">×</button>
         </div>
       </div>
-      <div class="taskbar-tray">
-        <div class="taskbar-time" id="taskbarTime"></div>
+      <div class="window-content">
+        <div class="profile-info">
+          <h2>ELMEHDAOUI Ahmed zine el abdine</h2>
+          <p class="role">Software Engineer, Mobile & Web Developer</p>
+          <ul class="info-list">
+            <li>🌱 Currently learning everything</li>
+            <li>🥅 Working towards 2025 Goals</li>
+            <li>⚡ Fun fact: Loves drawing despite not being good at it</li>
+          </ul>
+        </div>
       </div>
     </div>
+  </div>
 
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <button class="start-button" id="startButton">
+      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Start" width="16" height="16">
+      Start
+    </button>
+    
+    <!-- Start Menu -->
     <div class="start-menu" id="startMenu">
+      <div class="start-menu-item" id="aboutMeMenuItem">
+        <img src="https://win98icons.alexmeub.com/icons/png/user-0.png" alt="About Me" width="24" height="24">
+        <span>About Me</span>
+      </div>
       <div class="start-menu-item">
         <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="Documents" width="24" height="24">
         <span>Documents</span>
@@ -96,5 +122,15 @@
         <span>Shut Down...</span>
       </div>
     </div>
-  </body>
+
+    <div class="taskbar-items" id="taskbarItems">
+      <!-- Taskbar items will be added here dynamically -->
+    </div>
+
+    <div class="taskbar-tray">
+      <img src="https://win98icons.alexmeub.com/icons/png/loudspeaker_rays-0.png" alt="Sound" class="sound-icon" id="soundIcon">
+      <div class="taskbar-time" id="taskbarTime"></div>
+    </div>
+  </div>
+</body>
 </html>
