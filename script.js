@@ -103,6 +103,7 @@ class WindowManager {
     
     // Setup event listeners
     this.setupWindowControls(id);
+    this.setupMaximizeButton(id);
     this.setupDragging(id);
     
     // Add taskbar item
@@ -117,6 +118,17 @@ class WindowManager {
     // Setup window click handler for focus
     window.addEventListener('mousedown', () => {
       this.bringToFront(id);
+    });
+  }
+
+  setupMaximizeButton(id) {
+    const { container, window } = this.windows.get(id);
+    const maximizeBtn = window.querySelector('.window-control.maximize');
+    
+    maximizeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      container.classList.toggle('maximized');
+      playSound(clickSound);
     });
   }
 
@@ -309,6 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png'
   );
 
+  windowManager.registerWindow(
+    'cv',
+    document.getElementById('cv-window'),
+    'My CV',
+    'https://win98icons.alexmeub.com/icons/png/document_blank-0.png'
+  );
+
   // Preload sounds
   preloadSounds();
 
@@ -439,6 +458,20 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Message sent!');
       });
     }
+  }
+
+  // Add CV download functionality
+  document.querySelector('.download-cv')?.addEventListener('click', () => {
+    // Replace 'YOUR_CV_URL' with your actual CV download URL
+    const cvUrl = 'https://amaranth-alverta-67.tiiny.site';
+    window.open(cvUrl, '_blank');
+  });
+
+  // Update CV iframe source when window is opened
+  const cvFrame = document.getElementById('cv-frame');
+  if (cvFrame) {
+    // Replace 'YOUR_CV_URL' with your actual CV viewer URL
+    cvFrame.src = 'https://jmp.sh/MOGUorUc';
   }
 });
 

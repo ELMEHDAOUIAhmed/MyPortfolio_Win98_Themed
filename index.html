@@ -51,6 +51,10 @@
         <img src="https://win98icons.alexmeub.com/icons/png/outlook_express-5.png" alt="Contact ME">
         <span>Contact ME</span>
       </div>
+      <div class="desktop-icon" data-window="cv">
+        <img src="https://win98icons.alexmeub.com/icons/png/document_blank-0.png" alt="My CV">
+        <span>My CV</span>
+      </div>
     </div>
   </div>
 
@@ -275,7 +279,6 @@
             </div>
           </div>
           
-
           <div class="skills-section">
             <h3>Languages</h3>
             <div class="skill-item">
@@ -359,6 +362,32 @@
             <button type="button" class="form-button send-button">Send</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV Window -->
+  <div class="window-container window-hidden" id="cv-window">
+    <div class="window">
+      <div class="window-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/document_blank-0.png" alt="My CV" width="16" height="16">
+        My CV
+        <div class="window-controls">
+          <button class="window-control minimize">_</button>
+          <button class="window-control maximize">□</button>
+          <button class="window-control close">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="cv-container">
+          <div class="cv-toolbar">
+            <button class="download-cv">Download CV</button>
+          </div>
+          <div class="cv-viewer">
+            <!-- Replace 'YOUR_CV_URL' with your actual CV URL -->
+            <iframe src="about:blank" id="cv-frame" title="CV Viewer"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </div>
