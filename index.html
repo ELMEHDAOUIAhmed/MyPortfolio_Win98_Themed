@@ -15,11 +15,11 @@
         <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-5.png" alt="My Computer">
         <span>My Computer</span>
       </div>
-            <div class="desktop-icon">
+      <div class="desktop-icon">
         <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Recycle Bin">
         <span>Recycle Bin</span>
       </div>
-            <div class="desktop-icon">
+      <div class="desktop-icon">
         <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Projects">
         <span>My Projects</span>
       </div>
@@ -39,9 +39,7 @@
         <img src="https://win98icons.alexmeub.com/icons/png/mail_box-0.png" alt="Email">
         <span>Email</span>
       </div>
-
-
-      <div class="desktop-icon">
+      <div class="desktop-icon" data-window="contact">
         <img src="https://storage.googleapis.com/multi-static-content/thumbs/artage-io-thumb-e5ea88c36e638903afd418ca26caa87a.png" alt="Contact ME">
         <span>Contact ME</span>
       </div>
@@ -163,6 +161,45 @@
             <li>⚡ Fun fact: Loves drawing despite not being good at it</li>
           </ul>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Window -->
+  <div class="window-container window-hidden" id="contact-window">
+    <div class="window">
+      <div class="window-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/mail_box-0.png" alt="Contact" width="16" height="16">
+        Contact Me
+        <div class="window-controls">
+          <button class="window-control minimize">_</button>
+          <button class="window-control maximize">□</button>
+          <button class="window-control close">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <form id="contact-form" class="contact-form">
+          <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="form-button clear-button">Clear</button>
+            <button type="button" class="form-button send-button">Send</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

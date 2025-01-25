@@ -1,3 +1,11 @@
+// Add this to the top of your script.js file with other constants
+const contactForm = {
+  fullName: '',
+  email: '',
+  phone: '',
+  message: ''
+};
+
 // Add these sound effects
 const SOUNDS = {
   CLICK: 'https://www.myinstants.com/media/sounds/windows-95-mouse-click.mp3',
@@ -12,9 +20,9 @@ const closeSound = new Audio(SOUNDS.CLOSE);
 
 // Social media links
 const SOCIAL_LINKS = {
-  'LinkedIn': 'YOUR_LINKEDIN_URL',
-  'GitHub': 'YOUR_GITHUB_URL',
-  'Email': 'mailto:YOUR_EMAIL'
+  'LinkedIn': 'https://www.linkedin.com/in/ahmed-elmehdaoui-234182278',
+  'GitHub': 'https://github.com/ELMEHDAOUIAhmed',
+  'Email': 'mailto:elmehdaoui.ahmed77@gmail.com'
 };
 
 // Preload sounds
@@ -50,11 +58,11 @@ class WindowManager {
     this.draggedWindow = null;
     this.dragOffset = { x: 0, y: 0 };
     
-    // Safe area constants
+    // Update safe area constants to be more permissive
     this.SAFE_MARGIN = {
       TOP: 0,
-      RIGHT: 100, // Minimum width visible
-      BOTTOM: 50, // Space for taskbar + minimum height
+      RIGHT: 10,  // Reduced from 100 to 10
+      BOTTOM: 28, // Just enough for taskbar
       LEFT: 0
     };
   }
@@ -120,9 +128,9 @@ class WindowManager {
   constrainPosition(x, y, width, height) {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const taskbarHeight = 28; // Height of the taskbar
+    const taskbarHeight = 28;
 
-    // Calculate bounds with safe margins
+    // Calculate bounds with updated safe margins
     const minX = -width + this.SAFE_MARGIN.RIGHT;
     const maxX = viewportWidth - this.SAFE_MARGIN.LEFT;
     const minY = this.SAFE_MARGIN.TOP;
@@ -268,6 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'https://win98icons.alexmeub.com/icons/png/user-0.png'
   );
 
+  windowManager.registerWindow(
+    'contact',
+    document.getElementById('contact-window'),
+    'Contact Me',
+    'https://win98icons.alexmeub.com/icons/png/mail_box-0.png'
+  );
+
   // Preload sounds
   preloadSounds();
 
@@ -366,6 +381,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateTime();
   setInterval(updateTime, 60000); // Update every minute
+
+  // Add contact form event handlers
+  const contactFormElement = document.getElementById('contact-form');
+  if (contactFormElement) {
+    const inputs = contactFormElement.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('input', (e) => {
+        contactForm[e.target.name] = e.target.value;
+      });
+    });
+
+    const clearButton = contactFormElement.querySelector('.clear-button');
+    if (clearButton) {
+      clearButton.addEventListener('click', () => {
+        inputs.forEach(input => {
+          input.value = '';
+          contactForm[input.name] = '';
+        });
+      });
+    }
+
+    const sendButton = contactFormElement.querySelector('.send-button');
+    if (sendButton) {
+      sendButton.addEventListener('click', () => {
+        console.log('Form data:', contactForm);
+        // Here you can add your send logic
+        alert('Message sent!');
+      });
+    }
+  }
 });
 
 console.log('Windows 95 Portfolio Loaded!');

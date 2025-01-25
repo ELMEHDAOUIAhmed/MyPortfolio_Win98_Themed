@@ -71,6 +71,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   user-select: none;
+  max-width: calc(100vw - 20px);  /* Prevent window from going too wide */
+  max-height: calc(100vh - 48px); /* Prevent window from going too tall, accounting for taskbar */
 }
 
 .window-container.dragging {
@@ -263,6 +265,8 @@ body {
 .profile-info {
   padding: 8px;
   background-color: white;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .profile-info h2 {
@@ -285,6 +289,60 @@ body {
 .info-list li {
   margin-bottom: 8px;
   font-size: 14px;
+}
+
+/* Contact Form Styles */
+.contact-form {
+  background-color: white;
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid var(--win95-darker);
+  background: white;
+  font-family: 'MS Sans Serif', sans-serif;
+  font-size: 12px;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.form-button {
+  padding: 4px 12px;
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-lighter) var(--win95-darker) var(--win95-darker) var(--win95-lighter);
+  font-family: 'MS Sans Serif', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.form-button:active {
+  border-color: var(--win95-darker) var(--win95-lighter) var(--win95-lighter) var(--win95-darker);
 }
 
 /* Taskbar */
