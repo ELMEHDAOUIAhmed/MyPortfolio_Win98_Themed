@@ -43,7 +43,7 @@
         <img src="https://win98icons.alexmeub.com/icons/png/console_prompt-0.png" alt="GitHub">
         <span>GitHub</span>
       </div>
-      <div class="desktop-icon">
+      <div class="desktop-icon" data-window="email">
         <img src="https://win98icons.alexmeub.com/icons/png/mailbox_world-2.png" alt="Email">
         <span>My Email</span>
       </div>
@@ -54,6 +54,34 @@
       <div class="desktop-icon" data-window="cv">
         <img src="https://win98icons.alexmeub.com/icons/png/signature-1.png" alt="My CV">
         <span>My CV</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Window -->
+  <div class="window-container window-hidden" id="email-window">
+    <div class="window">
+      <div class="window-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/warning-0.png" alt="Warning" width="16" height="16">
+        Email Information
+        <div class="window-controls">
+          <button class="window-control minimize">_</button>
+          <button class="window-control maximize">□</button>
+          <button class="window-control close">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="email-popup">
+          <div class="email-popup-content">
+            <img src="https://win98icons.alexmeub.com/icons/png/mailbox_world-2.png" alt="email" class="warning-icon">
+            <p>Here is my email:</p>
+            <p class="email-address">elmehdaoui.ahmed77@gmail.com</p>
+            <div class="popup-buttons">
+              <button class="popup-button" id="copyEmail">Copy</button>
+              <button class="popup-button">OK</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -391,7 +419,6 @@
       </div>
     </div>
   </div>
-  
 
   <!-- Taskbar -->
   <div class="taskbar">
