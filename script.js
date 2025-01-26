@@ -1,4 +1,3 @@
-// Add to the beginning of the existing script.js file
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
   "Feel free to explore the windows!",
@@ -88,6 +87,11 @@ class WindowManager {
   }
 
   registerWindow(id, container, title, icon) {
+    if (!container) {
+      console.warn(`Container not found for window: ${id}`);
+      return;
+    }
+    
     const window = container.querySelector('.window');
     const taskbarItems = document.getElementById('taskbarItems');
     
@@ -220,7 +224,13 @@ class WindowManager {
   }
 
   showWindow(id) {
-    const { container, window, taskbarItem, title, icon } = this.windows.get(id);
+    const windowData = this.windows.get(id);
+    if (!windowData) {
+      console.warn(`Window not found: ${id}`);
+      return;
+    }
+    
+    const { container, window, taskbarItem, title, icon } = windowData;
     
     // If window was closed (taskbar item removed), recreate it
     if (!taskbarItem.parentElement) {
@@ -312,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'about-me',
     document.getElementById('about-me-window'),
     'About Me',
-    'https://win98icons.alexmeub.com/icons/png/user-0.png'
+    'hhttps://win98icons.alexmeub.com/icons/png/msg_information-0.png/'
   );
 
   windowManager.registerWindow(
@@ -335,6 +345,24 @@ document.addEventListener('DOMContentLoaded', () => {
     'My CV',
     'https://win98icons.alexmeub.com/icons/png/document_blank-0.png'
   );
+
+  // Register email window
+  windowManager.registerWindow(
+    'email',
+    document.getElementById('email-window'),
+    'Email Information',
+    'https://win98icons.alexmeub.com/icons/png/mailbox_world-2.png'
+  );
+
+  // Add copy email functionality
+  document.getElementById('copyEmail')?.addEventListener('click', () => {
+    const email = 'elmehdaoui.ahmed77@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+      alert('Email copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy email:', err);
+    });
+  });
 
   // Preload sounds
   preloadSounds();
@@ -470,7 +498,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add CV download functionality
   document.querySelector('.download-cv')?.addEventListener('click', () => {
-    // Replace 'YOUR_CV_URL' with your actual CV download URL
     const cvUrl = 'https://pouch.jumpshare.com/download/9qeiCiC9JsgfwZ7MIc31XU5uWW4We7vWR6Cx-xvShfexcNQnSbxiLXlifG1UcSDfI1fcPGYaAw7JhuY-yRqpVQ';
     window.open(cvUrl, '_blank');
   });
@@ -478,7 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update CV iframe source when window is opened
   const cvFrame = document.getElementById('cv-frame');
   if (cvFrame) {
-    // Replace 'YOUR_CV_URL' with your actual CV viewer URL
     cvFrame.src = 'https://jmp.sh/MOGUorUc';
   }
 });
