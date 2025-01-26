@@ -42,7 +42,7 @@ const closeSound = new Audio(SOUNDS.CLOSE);
 const SOCIAL_LINKS = {
   'LinkedIn': 'https://www.linkedin.com/in/ahmed-elmehdaoui-234182278',
   'GitHub': 'https://github.com/ELMEHDAOUIAhmed',
-  'Email': 'mailto:elmehdaoui.ahmed77@gmail.com'
+  'Email': 'elmehdaoui.ahmed77@gmail.com'
 };
 
 // Preload sounds
