@@ -322,14 +322,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'about-me',
     document.getElementById('about-me-window'),
     'About Me',
-    'hhttps://win98icons.alexmeub.com/icons/png/msg_information-0.png/'
+    'https://win98icons.alexmeub.com/icons/png/msg_information-0.png'
   );
 
   windowManager.registerWindow(
     'contact',
     document.getElementById('contact-window'),
     'Contact Me',
-    'https://win98icons.alexmeub.com/icons/png/mail_box-0.png'
+    'https://win98icons.alexmeub.com/icons/png/outlook_express-5.png'
   );
 
   windowManager.registerWindow(
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'cv',
     document.getElementById('cv-window'),
     'My CV',
-    'https://win98icons.alexmeub.com/icons/png/document_blank-0.png'
+    'https://win98icons.alexmeub.com/icons/png/signature-1.png'
   );
 
   // Register email window
