@@ -1,10 +1,42 @@
 package main
-import "github.com/gin-gonic/gin"
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+type contact struct {
+	id       int
+	fullName string
+	email    string
+	phone    int
+	message  string
+}
+
+var contacts []contact
+
+func postMessages(context *gin.Context) {
+
+	var newContact contact
+
+	if err := context.BindJSON(&newContact); err != nil {
+		return
+	}
+
+	contacts = append(contacts, newContact)
+
+	context.IndentedJSON(http.StatusCreated, newContact)
+
+}
+
+func getMessages(context *gin.Context) {
+	
+}
 
 func main() {
-    r := gin.Default()
-    r.GET("/", func(c *gin.Context) {
-        c.JSON(200, gin.H{"message": "Gin is working!"})
-    })
-    r.Run() // Default listens on :8080
+	router := gin.Default()
+	router.POST("/contactme", postMessages)
+	router.GET("/contactme", getMessages)
+	router.Run() // Default listens on :8080
 }
