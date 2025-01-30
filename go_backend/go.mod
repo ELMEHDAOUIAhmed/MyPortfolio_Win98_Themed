@@ -1,6 +1,6 @@
 module github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend
 
-go 1.23.4
+go 1.23.5
 
 require (
 	github.com/bytedance/sonic v1.12.8 // indirect
