@@ -490,14 +490,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sendButton) {
       sendButton.addEventListener('click', () => {
         // Get form data
-        const formData = {
-          fullName: contactFormElement.querySelector('input[name="fullName"]').value,
-          email: contactFormElement.querySelector('input[name="email"]').value,
-          phone: contactFormElement.querySelector('input[name="phone"]').value,
-          message: contactFormElement.querySelector('textarea[name="message"]').value,
-        };
+        // const formData = {
+        //   fullName: contactFormElement.querySelector('input[name="fullName"]').value,
+        //   email: contactFormElement.querySelector('input[name="email"]').value,
+        //   phone: contactFormElement.querySelector('input[name="phone"]').value,
+        //   message: contactFormElement.querySelector('textarea[name="message"]').value,
+        // };
     
-        console.log('Form data:', formData);
+        console.log('Form data:', contactForm);
     
         // Send data to the Go backend
         fetch('/contactme', {
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(contactForm),
         })
           .then(response => response.json())
           .then(data => {
