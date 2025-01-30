@@ -489,13 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = contactFormElement.querySelector('.send-button');
     if (sendButton) {
       sendButton.addEventListener('click', () => {
-        // Get form data
-        // const formData = {
-        //   fullName: contactFormElement.querySelector('input[name="fullName"]').value,
-        //   email: contactFormElement.querySelector('input[name="email"]').value,
-        //   phone: contactFormElement.querySelector('input[name="phone"]').value,
-        //   message: contactFormElement.querySelector('textarea[name="message"]').value,
-        // };
     
         console.log('Form data:', contactForm);
     
