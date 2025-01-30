@@ -25,10 +25,10 @@ func main() {
 	r.GET("/contactme", controllers.MessagesRetreive)
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
 
-	    // Load .env file for local development
-		if err := godotenv.Load(); err != nil {
-			panic("Error loading .env file")
-		}
+	// Load .env file for local development
+	if err := godotenv.Load(); err != nil {
+		panic("Error loading .env file")
+	}
 
 	app := fiber.New()
 
