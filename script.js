@@ -489,9 +489,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = contactFormElement.querySelector('.send-button');
     if (sendButton) {
       sendButton.addEventListener('click', () => {
-        console.log('Form data:', contactForm);
-        // Here you can add your send logic
-        alert('Message sent!');
+        // Get form data
+        const formData = {
+          fullName: contactFormElement.querySelector('input[name="fullName"]').value,
+          email: contactFormElement.querySelector('input[name="email"]').value,
+          phone: contactFormElement.querySelector('input[name="phone"]').value,
+          message: contactFormElement.querySelector('textarea[name="message"]').value,
+        };
+    
+        console.log('Form data:', formData);
+    
+        // Send data to the Go backend
+        fetch('/contactme', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            alert('Message sent!');
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('Failed to send message.');
+          });
       });
     }
   }

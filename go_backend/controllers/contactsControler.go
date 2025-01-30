@@ -10,7 +10,7 @@ import (
 
 func MessageCreate(context *gin.Context) {
 	//var message string
-	var newMessage []models.Messages
+	var newMessage models.Messages
 
 	if err := context.BindJSON(&newMessage); err != nil {
 		return
