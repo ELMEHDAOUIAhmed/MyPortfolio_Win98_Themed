@@ -10,6 +10,7 @@ import (
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/initializers"
 	"github.com/gin-gonic/gin"
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
 func init() {
@@ -23,6 +24,11 @@ func main() {
 	r.POST("/contactme", controllers.MessageCreate)
 	r.GET("/contactme", controllers.MessagesRetreive)
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
+
+	    // Load .env file for local development
+		if err := godotenv.Load(); err != nil {
+			panic("Error loading .env file")
+		}
 
 	app := fiber.New()
 
