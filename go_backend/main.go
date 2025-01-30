@@ -19,5 +19,5 @@ func main() {
 	r.POST("/contactme", controllers.MessageCreate)
 	r.GET("/contactme", controllers.MessagesRetreive)
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
-	r.Run()
+	r.Run("8080")
 }
