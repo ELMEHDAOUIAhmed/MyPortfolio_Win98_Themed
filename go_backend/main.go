@@ -9,6 +9,7 @@ import (
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/controllers"
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/initializers"
 	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 func init() {
@@ -22,6 +23,12 @@ func main() {
 	r.POST("/contactme", controllers.MessageCreate)
 	r.GET("/contactme", controllers.MessagesRetreive)
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
+
+	app := fiber.New()
+
+	app.Get("/env", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, ENV! " + os.Getenv("PORT"))
+	})
 
 	port := os.Getenv("PORT")
 	if port == "" {
