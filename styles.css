@@ -842,3 +842,34 @@ body {
   display: block;  
   margin-top: 4px; 
 }
+
+/* Context Menu Styles */
+.context-menu {
+  position: fixed;
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-lighter) var(--win95-darker) var(--win95-darker) var(--win95-lighter);
+  padding: 2px;
+  min-width: 120px;
+  z-index: 9999;
+}
+
+.context-menu-item {
+  padding: 4px 20px;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.context-menu-item:hover {
+  background-color: var(--win95-blue);
+  color: white;
+}
+
+.context-menu-separator {
+  height: 1px;
+  background-color: var(--win95-darker);
+  margin: 2px 0;
+}

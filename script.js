@@ -76,13 +76,130 @@ class WindowManager {
     this.draggedWindow = null;
     this.dragOffset = { x: 0, y: 0 };
     
-    // Update safe area constants to be more permissive
-    this.SAFE_MARGIN = {
-      TOP: 0,
-      RIGHT: 10,  // Reduced from 100 to 10
-      BOTTOM: 28, // Just enough for taskbar
-      LEFT: 0
+    // Constants for minimum visible portion of window
+    this.MIN_VISIBLE = {
+      WIDTH: 100,  // Minimum width that must remain visible
+      HEIGHT: 30   // Minimum height that must remain visible (title bar)
     };
+    
+    // Update taskbar height
+    this.TASKBAR_HEIGHT = 28;
+    
+    // Initialize screen dimensions
+    this.updateScreenDimensions();
+    
+    // Add resize listener to update screen dimensions
+    window.addEventListener('resize', () => this.updateScreenDimensions());
+
+    // Add context menu tracking
+    this.activeContextMenu = null;
+    
+    // Close context menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (this.activeContextMenu && !e.target.closest('.context-menu')) {
+        this.closeContextMenu();
+      }
+    });
+  }
+
+  updateScreenDimensions() {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+  }
+
+  constrainPosition(x, y, width, height) {
+    // Calculate bounds to keep minimum visible portion on screen
+    const minX = -(width - this.MIN_VISIBLE.WIDTH);
+    const maxX = this.screenWidth - this.MIN_VISIBLE.WIDTH;
+    const minY = 0; // Don't allow window above top of screen
+    const maxY = this.screenHeight - this.TASKBAR_HEIGHT - this.MIN_VISIBLE.HEIGHT;
+
+    // Constrain position
+    return {
+      x: Math.max(minX, Math.min(maxX, x)),
+      y: Math.max(minY, Math.min(maxY, y))
+    };
+  }
+
+  setupDragging(id) {
+    const { container, window } = this.windows.get(id);
+    const titleBar = window.querySelector('.window-title');
+
+    titleBar.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.window-controls')) return; // Don't drag if clicking controls
+      
+      this.draggedWindow = container;
+      const rect = container.getBoundingClientRect();
+      
+      // Calculate offset from mouse position to container top-left
+      this.dragOffset = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+      
+      // Add dragging class
+      container.classList.add('dragging');
+      
+      // Prevent text selection while dragging
+      e.preventDefault();
+    });
+  }
+
+  // Add these new methods for context menu handling
+  createContextMenu(items, x, y) {
+    // Remove any existing context menu
+    this.closeContextMenu();
+    
+    const menu = document.createElement('div');
+    menu.className = 'context-menu';
+    
+    items.forEach((item, index) => {
+      if (item.separator) {
+        const separator = document.createElement('div');
+        separator.className = 'context-menu-separator';
+        menu.appendChild(separator);
+      } else {
+        const menuItem = document.createElement('div');
+        menuItem.className = 'context-menu-item';
+        if (item.icon) {
+          const icon = document.createElement('img');
+          icon.src = item.icon;
+          icon.width = 16;
+          icon.height = 16;
+          menuItem.appendChild(icon);
+        }
+        menuItem.appendChild(document.createTextNode(item.label));
+        menuItem.addEventListener('click', () => {
+          item.action();
+          this.closeContextMenu();
+        });
+        menu.appendChild(menuItem);
+      }
+    });
+    
+    // Position the menu
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+    
+    // Add to document
+    document.body.appendChild(menu);
+    this.activeContextMenu = menu;
+    
+    // Adjust position if menu goes off screen
+    const menuRect = menu.getBoundingClientRect();
+    if (menuRect.right > window.innerWidth) {
+      menu.style.left = `${x - menuRect.width}px`;
+    }
+    if (menuRect.bottom > window.innerHeight) {
+      menu.style.top = `${y - menuRect.height}px`;
+    }
+  }
+  
+  closeContextMenu() {
+    if (this.activeContextMenu) {
+      this.activeContextMenu.remove();
+      this.activeContextMenu = null;
+    }
   }
 
   registerWindow(id, container, title, icon) {
@@ -104,10 +221,33 @@ class WindowManager {
     iconImg.height = 16;
     // Add error handling for icon loading
     iconImg.onerror = () => {
-      iconImg.src = 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png'; // Fallback icon
+      iconImg.src = 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png';
     };
     taskbarItem.appendChild(iconImg);
     taskbarItem.appendChild(document.createTextNode(title));
+
+    // Add right-click event listener for context menu
+    taskbarItem.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      this.createContextMenu([
+        {
+          label: 'Restore',
+          icon: 'https://win98icons.alexmeub.com/icons/png/window_3d-1.png',
+          action: () => this.showWindow(id)
+        },
+        {
+          label: 'Minimize',
+          icon: 'https://win98icons.alexmeub.com/icons/png/minimize-1.png',
+          action: () => this.minimizeWindow(id)
+        },
+        { separator: true },
+        {
+          label: 'Close',
+          icon: 'https://win98icons.alexmeub.com/icons/png/close-2.png',
+          action: () => this.closeWindow(id)
+        }
+      ], e.clientX, e.clientY);
+    });
 
     // Store references
     this.windows.set(id, { container, window, taskbarItem, title, icon });
@@ -141,48 +281,6 @@ class WindowManager {
       container.classList.toggle('maximized');
       playSound(clickSound);
     });
-  }
-
-  setupDragging(id) {
-    const { container, window } = this.windows.get(id);
-    const titleBar = window.querySelector('.window-title');
-
-    titleBar.addEventListener('mousedown', (e) => {
-      if (e.target.closest('.window-controls')) return; // Don't drag if clicking controls
-      
-      this.draggedWindow = container;
-      const rect = container.getBoundingClientRect();
-      
-      // Calculate offset from mouse position to container top-left
-      this.dragOffset = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
-      
-      // Add dragging class
-      container.classList.add('dragging');
-      
-      // Prevent text selection while dragging
-      e.preventDefault();
-    });
-  }
-
-  constrainPosition(x, y, width, height) {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const taskbarHeight = 28;
-
-    // Calculate bounds with updated safe margins
-    const minX = -width + this.SAFE_MARGIN.RIGHT;
-    const maxX = viewportWidth - this.SAFE_MARGIN.LEFT;
-    const minY = this.SAFE_MARGIN.TOP;
-    const maxY = viewportHeight - taskbarHeight - this.SAFE_MARGIN.BOTTOM;
-
-    // Constrain position
-    return {
-      x: Math.max(minX, Math.min(maxX, x)),
-      y: Math.max(minY, Math.min(maxY, y))
-    };
   }
 
   setupWindowControls(id) {
@@ -410,8 +508,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Apply position constraints
       const constrainedPos = windowManager.constrainPosition(x, y, rect.width, rect.height);
       
-      windowManager.draggedWindow.style.left = constrainedPos.x + 'px';
-      windowManager.draggedWindow.style.top = constrainedPos.y + 'px';
+      // Update window position with constrained values
+      windowManager.draggedWindow.style.left = `${constrainedPos.x}px`;
+      windowManager.draggedWindow.style.top = `${constrainedPos.y}px`;
     }
   });
 
