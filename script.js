@@ -313,7 +313,7 @@ function handleSubmit(event) {
     body: JSON.stringify({
       fullName: form.fullName.value,
       email: form.email.value,
-      phone: parseInt(form.phone.value),
+      phone: form.phone.value,
       message: form.message.value
     })
   })
