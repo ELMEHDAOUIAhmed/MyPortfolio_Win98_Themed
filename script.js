@@ -301,21 +301,27 @@ class WindowManager {
   }
 }
 
-function handleSubmit(event) {
-  event.preventDefault();
+document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById('contact-form');
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent page reload
+
+    // Get form data
+    const formData = new FormData(form);
+    let formObject = Object.fromEntries(formData.entries());
+        // Convert phone to a number (if it's not empty)
+        if (formObject.phone) {
+          formObject.phone = Number(formObject.phone);
+        }
+    console.log("Form submitted:", formObject);
   
   fetch('http://localhost:8080/contactme', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      fullName: form.fullName.value,
-      email: form.email.value,
-      phone: form.phone.value,
-      message: form.message.value
-    })
+    body: JSON.stringify(formObject)
   })
   .then(response => response.json())
   .then(() => {
@@ -323,7 +329,8 @@ function handleSubmit(event) {
     form.reset();
   })
   .catch(() => alert('Failed to send message.'));
-}
+});
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('startButton');
