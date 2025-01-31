@@ -1,7 +1,8 @@
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
-  "Feel free to explore the windows!",
-  "Need help? Just ask!",
+  "Window stuck ? right click on Taskbar and close it!",
+  "Feel free to explore you windows!",
+  "Enjoy the windows experience!",
   "Don't forget to check out my projects!",
   "You can contact me through the Contact window!",
   "To check out my Cv click on My CV!"
