@@ -301,35 +301,28 @@ class WindowManager {
   }
 }
 
-// Move handleSubmit to global scope
 function handleSubmit(event) {
   event.preventDefault();
+  const form = document.getElementById('contact-form');
   
-  const formData = {
-    fullName: event.target.fullName.value,
-    email: event.target.email.value,
-    phone: parseInt(event.target.phone.value),
-    message: event.target.message.value
-  };
-
-  // Send data to the backend
   fetch('http://localhost:8080/contactme', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(formData),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      alert('Message sent!');
-      event.target.reset();
+    body: JSON.stringify({
+      fullName: form.fullName.value,
+      email: form.email.value,
+      phone: parseInt(form.phone.value),
+      message: form.message.value
     })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert('Failed to send message.');
-    });
+  })
+  .then(response => response.json())
+  .then(() => {
+    alert('Message sent!');
+    form.reset();
+  })
+  .catch(() => alert('Failed to send message.'));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -495,12 +488,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateTime();
   setInterval(updateTime, 60000); // Update every minute
-
-  // Simplified contact form handling
-  const contactFormElement = document.getElementById('contact-form');
-  if (contactFormElement) {
-    contactFormElement.addEventListener('submit', handleSubmit);
-  }
 
   // Add CV download functionality
   document.querySelector('.download-cv')?.addEventListener('click', () => {
