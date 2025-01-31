@@ -7,6 +7,13 @@ const ROVER_MESSAGES = [
   "To check out my Cv click on My CV!"
 ];
 
+const contactForm = {
+  fullName: '',
+  email: '',
+  phone: '',
+  message: ''
+};
+
 let currentMessageIndex = 0;
 
 function updateRoverMessage() {
@@ -16,14 +23,6 @@ function updateRoverMessage() {
     currentMessageIndex = (currentMessageIndex + 1) % ROVER_MESSAGES.length;
   }
 }
-
-// Add this to the top of your script.js file with other constants
-const contactForm = {
-  fullName: '',
-  email: '',
-  phone: '',
-  message: ''
-};
 
 // Add these sound effects
 const SOUNDS = {
@@ -302,6 +301,37 @@ class WindowManager {
   }
 }
 
+// Move handleSubmit to global scope
+function handleSubmit(event) {
+  event.preventDefault();
+  
+  const formData = {
+    fullName: event.target.fullName.value,
+    email: event.target.email.value,
+    phone: parseInt(event.target.phone.value),
+    message: event.target.message.value
+  };
+
+  // Send data to the backend
+  fetch('http://localhost:8080/contactme', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      alert('Message sent!');
+      event.target.reset();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Failed to send message.');
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('startButton');
   const startMenu = document.getElementById('startMenu');
@@ -466,51 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTime();
   setInterval(updateTime, 60000); // Update every minute
 
-  // Add contact form event handlers
+  // Simplified contact form handling
   const contactFormElement = document.getElementById('contact-form');
   if (contactFormElement) {
-    const inputs = contactFormElement.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-      input.addEventListener('input', (e) => {
-        contactForm[e.target.name] = e.target.value;
-      });
-    });
-
-    const clearButton = contactFormElement.querySelector('.clear-button');
-    if (clearButton) {
-      clearButton.addEventListener('click', () => {
-        inputs.forEach(input => {
-          input.value = '';
-          contactForm[input.name] = '';
-        });
-      });
-    }
-
-    const sendButton = contactFormElement.querySelector('.send-button');
-    if (sendButton) {
-      sendButton.addEventListener('click', () => {
-    
-        console.log('Form data:', contactForm);
-    
-        // Send data to the Go backend
-        fetch('/contactme', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(contactForm),
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Success:', data);
-            alert('Message sent!');
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-            alert('Failed to send message.');
-          });
-      });
-    }
+    contactFormElement.addEventListener('submit', handleSubmit);
   }
 
   // Add CV download functionality
