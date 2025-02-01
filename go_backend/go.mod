@@ -1,7 +1,7 @@
 module github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend
 
-go 1.23.5
-
+go 1.22.11
+//go 1.23.5
 require github.com/gofiber/fiber/v2 v2.52.6
 
 require (
