@@ -415,7 +415,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     console.log("Form submitted:", formObject);
   
-  fetch('20.113.78.83/contactme', {
+  fetch('20.113.78.83//contactme', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
