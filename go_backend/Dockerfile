@@ -22,7 +22,7 @@ COPY --from=builder /go_backend .
 COPY .env .
 
 # Expose the port your application runs on (change if different)
-EXPOSE 8080
+EXPOSE 80
 
 # Command to run the application
 CMD ["./go_backend"]
