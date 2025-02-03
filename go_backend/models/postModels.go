@@ -11,3 +11,9 @@ type Messages struct {
 	Phone    int
 	Message  string
 }
+
+type User struct {
+	gorm.Model
+	Email    string `gorm:"unique"`
+	Password string
+}
