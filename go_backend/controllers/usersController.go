@@ -2,10 +2,13 @@ package controllers
 
 import (
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/initializers"
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/models"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -14,6 +17,7 @@ func Login(context *gin.Context) {
 	//get email/password
 
 	var body models.User
+	var user models.User
 
 	if err := context.BindJSON(&body); err != nil {
 
@@ -24,26 +28,11 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	//hash the password
-
-	// hashed_ps, error := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
-
-	// if error != nil {
-
-	// 	context.IndentedJSON(http.StatusBadRequest, gin.H{
-	// 		"Error": "Failed to HASH password",
-	// 	})
-
-	// 	return
-
-	// }
-
 	//query into DB to check if valid user
 
-	//result := initializers.DB.Where(map[string]interface{}{"Email": body.Email, "Password": hashed_ps}).Find(&body)
-	result := initializers.DB.Where("Email = ?", body.Email).First(&body)
+	initializers.DB.First(&user, "email = ?", body.Email)
 
-	if result.Error != nil {
+	if user.ID == 0 {
 
 		context.IndentedJSON(http.StatusBadRequest, gin.H{
 			"Error": "Email or Password incorrect! Invalid User!",
@@ -52,10 +41,46 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	//if valid generate token and login
+	//fmt.Println("retreived user is " + user.Email + " password " + user.Password) // in case you forget .First( rak tarmiha fi variable jdida)
+
+	//compare password with hashed password
+
+	error := bcrypt.CompareHashAndPassword([]byte(body.Password), []byte(user.Password))
+
+	if error != nil {
+
+		context.IndentedJSON(http.StatusBadRequest, gin.H{
+			"Error": "Email or Password incorrect! Invalid User!",
+		})
+
+		return
+
+	}
+
+	//if valid generate jwt token
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": user.ID,
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
+	})
+
+	// Sign and get the complete encoded token as a string using the secret
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRETKEY")))
+
+	if err != nil {
+
+		context.IndentedJSON(http.StatusBadRequest, gin.H{
+			"Error": "Failed to generate Token!",
+		})
+
+		return
+
+	}
+
+	//send it back
 
 	context.IndentedJSON(http.StatusOK, gin.H{
-		"Success": "Welcome User :" + body.Email,
+		"Success": "JWT Token :" + tokenString,
 	})
 
 }
@@ -104,7 +129,5 @@ func Signup(context *gin.Context) {
 	context.IndentedJSON(http.StatusCreated, gin.H{
 		"Success": "User created",
 	})
-
-	//generate & return token to user
 
 }

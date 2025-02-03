@@ -24,7 +24,7 @@ func main() {
 	r.GET("/contactme", controllers.MessagesRetreive)
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
 	r.POST("/signup", controllers.Signup)
-	r.GET("/login", controllers.Login)
+	r.POST("/login", controllers.Login)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -43,7 +43,7 @@ func CORSMiddleware() gin.HandlerFunc {
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
 
 		if ctx.Request.Method == "OPTIONS" {
-			ctx.AbortWithStatus(204) // No content for preflight requests
+			ctx.AbortWithStatus(204) // No content for preflight requests //
 			return
 		}
 
