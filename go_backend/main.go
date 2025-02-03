@@ -24,7 +24,7 @@ func main() {
 	r.GET("/contactme", controllers.MessagesRetreive)
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
 	r.POST("/signup", controllers.Signup)
-	//r.GET("/login/:email,:password", controllers.Signup)
+	r.GET("/login", controllers.Login)
 
 	port := os.Getenv("PORT")
 	if port == "" {

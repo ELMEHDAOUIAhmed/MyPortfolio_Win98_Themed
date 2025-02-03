@@ -11,16 +11,52 @@ import (
 
 func Login(context *gin.Context) {
 
-	//email := context.Param("email")
-	//password := context.Param("password")
+	//get email/password
 
-	//hash password
+	var body models.User
+
+	if err := context.BindJSON(&body); err != nil {
+
+		context.IndentedJSON(http.StatusBadRequest, gin.H{
+			"Error": "Failed to read body",
+		})
+
+		return
+	}
+
+	//hash the password
+
+	// hashed_ps, error := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
+
+	// if error != nil {
+
+	// 	context.IndentedJSON(http.StatusBadRequest, gin.H{
+	// 		"Error": "Failed to HASH password",
+	// 	})
+
+	// 	return
+
+	// }
 
 	//query into DB to check if valid user
 
+	//result := initializers.DB.Where(map[string]interface{}{"Email": body.Email, "Password": hashed_ps}).Find(&body)
+	result := initializers.DB.Where("Email = ?", body.Email).First(&body)
+
+	if result.Error != nil {
+
+		context.IndentedJSON(http.StatusBadRequest, gin.H{
+			"Error": "Email or Password incorrect! Invalid User!",
+		})
+
+		return
+	}
+
 	//if valid generate token and login
 
-	//else return error
+	context.IndentedJSON(http.StatusOK, gin.H{
+		"Success": "Welcome User :" + body.Email,
+	})
 
 }
 
