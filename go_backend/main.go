@@ -8,6 +8,7 @@ import (
 
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/controllers"
 	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/initializers"
+	"github.com/ELMEHDAOUIAhmed/MyPortfolio_Win98_Themed/go_backend/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +26,8 @@ func main() {
 	r.GET("/contactme/:id", controllers.MessagesRetreivebyID)
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
+	r.GET("/validate", middleware.WebAuthMiddleware, controllers.Validate)
+	r.GET("/validate/:token", middleware.MobileAuthMiddleware, controllers.Validate)
 
 	port := os.Getenv("PORT")
 	if port == "" {

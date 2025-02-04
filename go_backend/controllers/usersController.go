@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -32,6 +33,8 @@ func Login(context *gin.Context) {
 
 	initializers.DB.First(&user, "email = ?", body.Email)
 
+	fmt.Println("user id is :", user.ID)
+
 	if user.ID == 0 {
 
 		context.IndentedJSON(http.StatusBadRequest, gin.H{
@@ -45,7 +48,7 @@ func Login(context *gin.Context) {
 
 	//compare password with hashed password
 
-	error := bcrypt.CompareHashAndPassword([]byte(body.Password), []byte(user.Password))
+	error := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 
 	if error != nil {
 
@@ -79,8 +82,11 @@ func Login(context *gin.Context) {
 
 	//send it back
 
+	context.SetSameSite(http.SameSiteLaxMode)
+	context.SetCookie("Authorization", tokenString, 3600*24, "", "", false, true)
+
 	context.IndentedJSON(http.StatusOK, gin.H{
-		"Success": "JWT Token :" + tokenString,
+		"JWT_Token": tokenString,
 	})
 
 }
@@ -130,4 +136,15 @@ func Signup(context *gin.Context) {
 		"Success": "User created",
 	})
 
+}
+
+func Validate(context *gin.Context) {
+
+	user, _ := context.Get("User")
+
+	//user.(models.User).Email //ect...
+
+	context.IndentedJSON(http.StatusOK, gin.H{
+		"Logged in user": user,
+	})
 }
