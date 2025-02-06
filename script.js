@@ -1,31 +1,3 @@
-// Wait for the environment variables to be loaded
-window.addEventListener('load', async () => {
-  // Load Supabase client library dynamically
-  const { createClient } = supabase;
-
-  // Retrieve environment variables from loadEnv.js
-  const supabaseUrl = window.env.SUPABASE_URL;
-  const supabaseKey = window.env.SUPABASE_ANON_KEY;
-
-  // Initialize Supabase client
-  const supabase = createClient(supabaseUrl, supabaseKey);
-
-  // Example usage: Fetch data from a table
-  async function fetchData() {
-    const { data, error } = await supabase
-      .from('your_table_name')
-      .select('*');
-
-    if (error) {
-      console.error('Error fetching data:', error);
-    } else {
-      console.log('Data:', data);
-    }
-  }
-
-  fetchData();
-});
-
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
   "Window stuck ? right click on Taskbar and close it!",
@@ -647,5 +619,34 @@ document.addEventListener("DOMContentLoaded", function() {
     cvFrame.src = 'https://jmp.sh/MOGUorUc';
   }
 });
+
+
+window.addEventListener('load', async () => {
+  // Load Supabase client library dynamically
+  const { createClient } = supabase;
+
+  // Retrieve environment variables from loadEnv.js
+  const supabaseUrl = window.env.SUPABASE_URL;
+  const supabaseKey = window.env.SUPABASE_ANON_KEY;
+
+  // Initialize Supabase client
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Example usage: Fetch data from a table
+  async function fetchData() {
+    const { data, error } = await supabase
+      .from('your_table_name')
+      .select('*');
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      console.log('Data:', data);
+    }
+  }
+
+  fetchData();
+});
+
 
 console.log('Windows 95 Portfolio Loaded!');
