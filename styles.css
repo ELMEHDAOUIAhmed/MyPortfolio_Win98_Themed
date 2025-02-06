@@ -1,3 +1,75 @@
+.boot-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif;
+}
+
+.boot-content {
+  text-align: center;
+}
+
+.win95-logo {
+  font-size: 48px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+.boot-progress {
+  width: 300px;
+  height: 20px;
+  background: #000;
+  border: 2px solid #fff;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.boot-progress-bar {
+  width: 0;
+  height: 100%;
+  background: #fff;
+  animation: progress 5s linear forwards;
+}
+
+.boot-text {
+  font-size: 14px;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in forwards 1s;
+}
+
+.boot-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes progress {
+  0% { width: 0; }
+  20% { width: 20%; }
+  40% { width: 38%; }
+  60% { width: 52%; }
+  80% { width: 75%; }
+  100% { width: 100%; }
+}
+
+
 * {
   margin: 0;
   padding: 0;

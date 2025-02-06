@@ -17,6 +17,21 @@ const contactForm = {
 
 let currentMessageIndex = 0;
 
+function handleBootSequence() {
+  const bootScreen = document.getElementById('bootScreen');
+  const startupSound = new Audio('https://www.myinstants.com/media/sounds/windows-95-startup.mp3');
+
+  // Play startup sound
+  startupSound.play().catch(err => console.warn('Could not play startup sound:', err));
+
+  // Hide boot screen after animation
+  setTimeout(() => {
+    bootScreen.classList.add('hidden');
+    // Remove from DOM after transition
+    setTimeout(() => bootScreen.remove(), 500);
+  }, 5000);
+}
+
 function updateRoverMessage() {
   const messageElement = document.querySelector('.rover-message');
   if (messageElement) {
@@ -401,6 +416,8 @@ class WindowManager {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  handleBootSequence();
+
   const form = document.getElementById('contact-form');
 
   form.addEventListener("submit", function(event) {
@@ -409,29 +426,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // Get form data
     const formData = new FormData(form);
     let formObject = Object.fromEntries(formData.entries());
-        // Convert phone to a number (if it's not empty)
-        if (formObject.phone) {
-          formObject.phone = Number(formObject.phone);
-        }
+    // Convert phone to a number (if it's not empty)
+    if (formObject.phone) {
+      formObject.phone = Number(formObject.phone);
+    }
     console.log("Form submitted:", formObject);
   
-  fetch('http://20.113.78.83/contactme', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formObject)
-  })
-  .then(response => response.json())
-  .then(() => {
-    alert('Message sent!');
-    form.reset();
-  })
-  .catch(() => alert('Failed to send message.'));
-});
-});
+    fetch('http://20.113.78.83/contactme', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formObject)
+    })
+    .then(response => response.json())
+    .then(() => {
+      alert('Message sent!');
+      form.reset();
+    })
+    .catch(() => alert('Failed to send message.'));
+  });
 
-document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('startButton');
   const startMenu = document.getElementById('startMenu');
   const taskbarTime = document.getElementById('taskbarTime');
