@@ -1,9 +1,30 @@
-// import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
+// Wait for the environment variables to be loaded
+window.addEventListener('load', async () => {
+  // Load Supabase client library dynamically
+  const { createClient } = supabase;
 
-// const supabase = createClient(
-//   process.env.SUPABASE_URL,
-//   process.env.SUPABASE_ANON_KEY
-// );
+  // Retrieve environment variables from loadEnv.js
+  const supabaseUrl = window.env.SUPABASE_URL;
+  const supabaseKey = window.env.SUPABASE_ANON_KEY;
+
+  // Initialize Supabase client
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Example usage: Fetch data from a table
+  async function fetchData() {
+    const { data, error } = await supabase
+      .from('your_table_name')
+      .select('*');
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      console.log('Data:', data);
+    }
+  }
+
+  fetchData();
+});
 
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
