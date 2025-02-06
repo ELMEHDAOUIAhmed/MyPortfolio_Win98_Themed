@@ -367,7 +367,8 @@ class WindowManager {
     window.classList.add('restoring');
     taskbarItem.classList.add('active');
     this.bringToFront(id);
-    playSound(openSound);
+    // Changed from openSound to clickSound
+    playSound(clickSound);
     
     window.addEventListener('animationend', () => {
       window.classList.remove('restoring');
