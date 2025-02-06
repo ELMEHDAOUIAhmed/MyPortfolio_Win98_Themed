@@ -1,3 +1,10 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
+
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
   "Window stuck ? right click on Taskbar and close it!",
@@ -421,31 +428,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const form = document.getElementById('contact-form');
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent page reload
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
 
     // Get form data
     const formData = new FormData(form);
-    let formObject = Object.fromEntries(formData.entries());
-    // Convert phone to a number (if it's not empty)
-    if (formObject.phone) {
-      formObject.phone = Number(formObject.phone);
-    }
-    console.log("Form submitted:", formObject);
-  
-    fetch('http://20.113.78.83/contactme', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formObject)
-    })
-    .then(response => response.json())
-    .then(() => {
-      alert('Message sent!');
+    const formObject = Object.fromEntries(formData.entries());
+
+    try {
+      const { data, error } = await supabase
+        .from('contact_submissions')
+        .insert([formObject]);
+
+      if (error) throw error;
+
+      alert('Message sent successfully!');
       form.reset();
-    })
-    .catch(() => alert('Failed to send message.'));
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    }
   });
 
   const startButton = document.getElementById('startButton');
