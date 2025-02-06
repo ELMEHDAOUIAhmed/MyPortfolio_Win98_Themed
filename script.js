@@ -1,9 +1,9 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
+// import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+// const supabase = createClient(
+//   process.env.SUPABASE_URL,
+//   process.env.SUPABASE_ANON_KEY
+// );
 
 const ROVER_MESSAGES = [
   "Hi! My Name is Ahmed Welcome to my portfolio!",
