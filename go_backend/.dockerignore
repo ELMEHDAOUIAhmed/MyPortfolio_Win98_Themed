@@ -1,5 +1,0 @@
-**/*.exe
-**/*.exe-
-.git
-Dockerfile
-.gitignore
