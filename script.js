@@ -609,14 +609,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Add CV download functionality
   document.querySelector('.download-cv')?.addEventListener('click', () => {
-    const cvUrl = 'https://pouch.jumpshare.com/download/9qeiCiC9JsgfwZ7MIc31XU5uWW4We7vWR6Cx-xvShfexcNQnSbxiLXlifG1UcSDfI1fcPGYaAw7JhuY-yRqpVQ';
+    const cvUrl = 'https://pouch.jumpshare.com/download/c7IeHqtH5gminn6lXYkxAqSEWJ6ed7TNUuom2PEDT2k';
     window.open(cvUrl, '_blank');
   });
 
   // Update CV iframe source when window is opened
   const cvFrame = document.getElementById('cv-frame');
   if (cvFrame) {
-    cvFrame.src = 'https://jmp.sh/MOGUorUc';
+    cvFrame.src = 'https://jmp.sh/z7lUcbuL';
   }
 });
 
