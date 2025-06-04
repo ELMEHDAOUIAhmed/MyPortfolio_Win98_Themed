@@ -29,7 +29,7 @@ function handleBootSequence() {
     bootScreen.classList.add('hidden');
     // Remove from DOM after transition
     setTimeout(() => bootScreen.remove(), 500);
-  }, 4000);
+  }, 2000);
 }
 
 function updateRoverMessage() {
