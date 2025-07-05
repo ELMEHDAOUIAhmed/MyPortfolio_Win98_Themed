@@ -421,26 +421,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const form = document.getElementById('contact-form');
 
-  form.addEventListener("submit", async function(event) {
+  form.addEventListener("submit", function(event) {
     event.preventDefault();
-
-    // Get form data
-    const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData.entries());
-
-    try {
-      const { data, error } = await supabase
-        .from('contact_submissions')
-        .insert([formObject]);
-
-      if (error) throw error;
-
-      alert('Message sent successfully!');
-      form.reset();
-    } catch (error) {
-      console.error('Error sending message:', error);
-      alert('Failed to send message. Please try again.');
-    }
+    
+    // Simple form submission without database
+    alert('Thank you for your message! This is a demo portfolio - no actual message was sent.');
+    form.reset();
   });
 
   const startButton = document.getElementById('startButton');
@@ -609,43 +595,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Add CV download functionality
   document.querySelector('.download-cv')?.addEventListener('click', () => {
-    const cvUrl = 'https://pouch.jumpshare.com/download/Z48cNysQ41ThuxhJ16xD5bYrtdwryuxr6I69HT03tfI';
+    const cvUrl = 'https://pouch.jumpshare.com/download/zambzRInomZSq1nqN-ov_gnd8HpZ1NrM03M6J6OPa6s';
     window.open(cvUrl, '_blank');
   });
 
   // Update CV iframe source when window is opened
   const cvFrame = document.getElementById('cv-frame');
   if (cvFrame) {
-    cvFrame.src = 'https://jmp.sh/AqUsZzVs';
+    cvFrame.src = 'https://jmp.sh/Suxp9pvO';
   }
-});
-
-
-window.addEventListener('load', async () => {
-  // Load Supabase client library dynamically
-  const { createClient } = supabase;
-
-  // Retrieve environment variables from loadEnv.js
-  const supabaseUrl = window.env.SUPABASE_URL;
-  const supabaseKey = window.env.SUPABASE_ANON_KEY;
-
-  // Initialize Supabase client
-  const supabase = createClient(supabaseUrl, supabaseKey);
-
-  // Example usage: Fetch data from a table
-  async function fetchData() {
-    const { data, error } = await supabase
-      .from('your_table_name')
-      .select('*');
-
-    if (error) {
-      console.error('Error fetching data:', error);
-    } else {
-      console.log('Data:', data);
-    }
-  }
-
-  fetchData();
 });
 
 
