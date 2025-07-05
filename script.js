@@ -17,19 +17,91 @@ const contactForm = {
 
 let currentMessageIndex = 0;
 
+function showUpdateErrorPopup() {
+  // Create error popup HTML
+  const errorPopup = document.createElement('div');
+  errorPopup.className = 'error-popup-overlay';
+  errorPopup.innerHTML = `
+    <div class="error-popup">
+      <div class="error-popup-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/msg_error-0.png" alt="Error" width="16" height="16">
+        Portfolio Update Required
+        <div class="error-popup-controls">
+          <button class="error-popup-control">×</button>
+        </div>
+      </div>
+      <div class="error-popup-content">
+        <div class="error-popup-body">
+          <img src="https://win98icons.alexmeub.com/icons/png/msg_error-0.png" alt="Error" class="error-icon">
+          <div class="error-message">
+            <p><strong>Critical Update Available!</strong></p>
+            <p>A new version of Ahmed's Portfolio is available with enhanced features and improved performance.</p>
+            <p>Please visit the updated portfolio for the best experience:</p>
+            <p class="update-link"><strong>https://elmehdaouiahmed.github.io/AhmedZinPortfolio/</strong></p>
+          </div>
+        </div>
+        <div class="error-popup-buttons">
+          <button class="error-button primary" id="visitNewPortfolio">Visit New Portfolio</button>
+          <button class="error-button" id="continueOldPortfolio">Continue with Old Version</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Add to body
+  document.body.appendChild(errorPopup);
+  
+  // Play error sound using the preloaded audio
+  playSound(errorSound);
+  
+  // Add event listeners
+  const visitButton = errorPopup.querySelector('#visitNewPortfolio');
+  const continueButton = errorPopup.querySelector('#continueOldPortfolio');
+  const closeButton = errorPopup.querySelector('.error-popup-control');
+  
+  function closePopup() {
+    errorPopup.classList.add('fade-out');
+    setTimeout(() => {
+      if (errorPopup.parentNode) {
+        errorPopup.parentNode.removeChild(errorPopup);
+      }
+    }, 300);
+  }
+  
+  visitButton.addEventListener('click', () => {
+    window.open('https://elmehdaouiahmed.github.io/AhmedZinPortfolio/', '_blank');
+    closePopup();
+  });
+  
+  continueButton.addEventListener('click', closePopup);
+  closeButton.addEventListener('click', closePopup);
+  
+  // Close on overlay click
+  errorPopup.addEventListener('click', (e) => {
+    if (e.target === errorPopup) {
+      closePopup();
+    }
+  });
+}
+
 function handleBootSequence() {
   const bootScreen = document.getElementById('bootScreen');
-  const startupSound = new Audio('https://www.myinstants.com/media/sounds/windows-95-startup.mp3');
 
-  // Play startup sound
-  startupSound.play().catch(err => console.warn('Could not play startup sound:', err));
+  // Play startup sound using the preloaded audio
+  playSound(startupSound);
 
-  // Hide boot screen after animation
+  // Hide boot screen after longer animation sequence (Windows 98 took longer to boot)
   setTimeout(() => {
     bootScreen.classList.add('hidden');
     // Remove from DOM after transition
-    setTimeout(() => bootScreen.remove(), 500);
-  }, 2000);
+    setTimeout(() => {
+      bootScreen.remove();
+      // Show error popup after boot screen is gone
+      setTimeout(() => {
+        showUpdateErrorPopup();
+      }, 1000);
+    }, 800);
+  }, 5500); // Extended timing to match the full animation sequence
 }
 
 function updateRoverMessage() {
@@ -43,14 +115,46 @@ function updateRoverMessage() {
 // Add these sound effects
 const SOUNDS = {
   CLICK: 'https://www.myinstants.com/media/sounds/windows-95-mouse-click.mp3',
-  OPEN: 'https://www.myinstants.com/media/sounds/windows-95-startup.mp3',
+  STARTUP: 'https://www.myinstants.com/media/sounds/windows-95-startup.mp3',
+  ERROR: 'https://www.myinstants.com/media/sounds/windows-error.mp3',
   CLOSE: 'https://www.myinstants.com/media/sounds/windows-95-shutdown.mp3',
 };
 
-// Create audio elements
+// Create audio elements with better configuration
 const clickSound = new Audio(SOUNDS.CLICK);
-const openSound = new Audio(SOUNDS.OPEN);
+const startupSound = new Audio(SOUNDS.STARTUP);
+const errorSound = new Audio(SOUNDS.ERROR);
 const closeSound = new Audio(SOUNDS.CLOSE);
+
+// Enable sounds after user interaction (required by modern browsers)
+let soundsEnabled = false;
+
+function enableSounds() {
+  if (!soundsEnabled) {
+    // Try to play a silent sound to unlock audio context
+    const sounds = [clickSound, startupSound, errorSound, closeSound];
+    sounds.forEach(sound => {
+      sound.play().then(() => {
+        sound.pause();
+        sound.currentTime = 0;
+      }).catch(() => {
+        // Ignore errors for this unlock attempt
+      });
+    });
+    soundsEnabled = true;
+    console.log('Sounds enabled after user interaction');
+  }
+}
+
+// Add event listener for first user interaction
+document.addEventListener('click', enableSounds, { once: true });
+document.addEventListener('keydown', enableSounds, { once: true });
+
+// Configure audio elements
+[clickSound, startupSound, errorSound, closeSound].forEach(audio => {
+  audio.preload = 'auto';
+  audio.volume = 0.5; // Set reasonable volume
+});
 
 // Social media links
 const SOCIAL_LINKS = {
@@ -61,22 +165,46 @@ const SOCIAL_LINKS = {
 
 // Preload sounds
 function preloadSounds() {
-  try {
-    clickSound.load();
-    openSound.load();
-    closeSound.load();
-  } catch (error) {
-    console.warn('Sound loading failed:', error);
-  }
+  const sounds = [clickSound, startupSound, errorSound, closeSound];
+  
+  sounds.forEach(sound => {
+    try {
+      sound.load();
+      // Test if sound can be played (helps with browser autoplay policies)
+      sound.addEventListener('canplaythrough', () => {
+        console.log(`Sound loaded: ${sound.src}`);
+      }, { once: true });
+      
+      sound.addEventListener('error', (e) => {
+        console.warn(`Sound loading failed: ${sound.src}`, e);
+      });
+    } catch (error) {
+      console.warn('Sound loading failed:', error);
+    }
+  });
 }
 
 // Play sound with error handling
 function playSound(sound) {
   try {
+    // Reset the sound to beginning
     sound.currentTime = 0;
-    sound.play().catch(error => {
-      console.warn('Sound playback failed:', error);
-    });
+    
+    // Play the sound
+    const playPromise = sound.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        // Sound played successfully
+      }).catch(error => {
+        // Handle autoplay policy or other errors
+        if (error.name === 'NotAllowedError') {
+          console.warn('Sound blocked by autoplay policy. User interaction required.');
+        } else {
+          console.warn('Sound playback failed:', error.message);
+        }
+      });
+    }
   } catch (error) {
     console.warn('Sound playback failed:', error);
   }
@@ -561,7 +689,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  // Handle desktop icon clicks with social media support
+  // Handle desktop icon clicks with social media and external link support
   const desktopIcons = document.querySelectorAll('.desktop-icon');
   desktopIcons.forEach(icon => {
     icon.addEventListener('click', (e) => {
@@ -570,9 +698,14 @@ document.addEventListener("DOMContentLoaded", function() {
       
       const iconName = icon.querySelector('span').textContent;
       const windowId = icon.dataset.window;
+      const externalLink = icon.dataset.external;
 
+      // Check for external links
+      if (externalLink === 'latest-portfolio') {
+        window.open('https://elmehdaouiahmed.github.io/AhmedZinPortfolio/', '_blank');
+      }
       // Check if it's a social media icon
-      if (SOCIAL_LINKS[iconName]) {
+      else if (SOCIAL_LINKS[iconName]) {
         window.open(SOCIAL_LINKS[iconName], '_blank');
       } else if (windowId) {
         windowManager.showWindow(windowId);
